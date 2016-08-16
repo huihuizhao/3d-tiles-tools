@@ -24,7 +24,11 @@ if (process.argv.length < 4 || defined(argv.h) || defined(argv.help) || !defined
         '        -t --tilesOnly, Only gzip tiles.\n' +
         '    gunzip  Gunzips the input tileset.\n' +
         '        -i --input, input=PATH The input tileset directory.\n' +
-        '        -o --output, output=PATH The output tileset directory.\n';
+        '        -o --output, output=PATH The output tileset directory.\n' +
+        '    combine  Combines all external tilesets into a single tileset.json file.\n' +
+        '        -i --input, input=PATH The input tileset directory.\n' +
+        '        -o --output, output=PATH The output tileset directory.\n' +
+        '        -r --rootJson, rootJson=PATH Relative path to the root json. If omitted, "tileset.json" is used.\n';
     console.log(help);
     return;
 }
@@ -87,10 +91,12 @@ function getStage(stageName, argv) {
     switch (stageName) {
         case 'gzip':
         case 'gunzip':
-            if (defined(argv.t) || defined(argv['tilesOnly'])) {
+            if (defined(argv.t) || defined(argv.tilesOnly)) {
                 stage.tilesOnly = true;
             }
             break;
+        case 'combine':
+            stage.rootJson = defaultValue(argv.r, argv.rootJson);
     }
     return stage;
 }

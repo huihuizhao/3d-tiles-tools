@@ -47,7 +47,6 @@ This pipeline uncompresses the input tileset and then compresses all the tiles. 
 }
 ```
 
-
 It is also possible to run stages individually:
 
 ### gzip
@@ -64,5 +63,12 @@ Gunzips the input tileset.
 
 ```
 node ./bin/3d-tiles-tools.js gunzip -i ./specs/data/TilesetOfTilesets/ -o ./output/TilesetOfTilesets-gunzipped/
+```
 
+### combine
+
+Combines all external tilesets into a single tileset.json file.
+
+```
+node ./bin/3d-tiles-tools.js combine -i ./specs/data/TilesetOfTilesets/ -o ./output/TilesetOfTilesets-combined/
 ```

@@ -48,22 +48,7 @@ describe('runPipeline', function() {
         var pipeline = {
             input : inputDirectory,
             output : outputDirectory,
-            stages : ['gzip', 'gunzip']
-        };
-        expect(runPipeline(pipeline)
-            .then(function() {
-                return isGzipped(outputJson)
-                    .then(function(isGzipped) {
-                        expect(isGzipped).toBe(false);
-                    });
-            }), done).toResolve();
-    });
-
-    it('runs three stages', function (done) {
-        var pipeline = {
-            input : inputDirectory,
-            output : outputDirectory,
-            stages : ['gzip', 'gunzip', 'gzip']
+            stages : ['combine', 'gzip']
         };
         expect(runPipeline(pipeline)
             .then(function() {
@@ -74,17 +59,32 @@ describe('runPipeline', function() {
             }), done).toResolve();
     });
 
-    it('runs four stages', function (done) {
+    it('runs three stages', function (done) {
         var pipeline = {
             input : inputDirectory,
             output : outputDirectory,
-            stages : ['gzip', 'gunzip', 'gzip', 'gunzip']
+            stages : ['combine', 'gzip', 'gunzip']
         };
         expect(runPipeline(pipeline)
             .then(function() {
                 return isGzipped(outputJson)
                     .then(function(isGzipped) {
                         expect(isGzipped).toBe(false);
+                    });
+            }), done).toResolve();
+    });
+
+    it('runs four stages', function (done) {
+        var pipeline = {
+            input : inputDirectory,
+            output : outputDirectory,
+            stages : ['combine', 'gzip', 'gunzip', 'gzip']
+        };
+        expect(runPipeline(pipeline)
+            .then(function() {
+                return isGzipped(outputJson)
+                    .then(function(isGzipped) {
+                        expect(isGzipped).toBe(true);
                     });
             }), done).toResolve();
     });
